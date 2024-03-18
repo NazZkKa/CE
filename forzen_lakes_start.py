@@ -1,3 +1,8 @@
+from evo_algotithm import *
+from frozen_lake import *
+from variation_operators import *
+
+
 if __name__ == '__main__':
     # Dictonary with Configurations for the Simple Evolutionary Algorithm 
     config = {
