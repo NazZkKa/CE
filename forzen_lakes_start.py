@@ -1,31 +1,32 @@
-from evo_algotithm import *
-from frozen_lake import *
-from variation_operators import *
+import evo_algorithm as ea
+import variation_operators as vo
+import random
+import test_frozen_lake as tfl
+from maps_to_evaluate import *
+import sys
 
 
 if __name__ == '__main__':
     # Dictonary with Configurations for the Simple Evolutionary Algorithm 
     config = {
-        'population_size' : 100,
-        'generations' : 2000,
-        'genotype_size' : len(cities),
+        'population_size' : 10,
+        'generations' : 25,
+        'genotype_size' : REP_1_SIZE_4_by_4,
         'prob_crossover' : 0.9,
         'prob_mutation' : 0.05,
         'seed' : int(sys.argv[1]),
-        'generate_individual' : generate_random_individual_permutations,
-        'mapping' : mapping(cities),
-        'maximization' : False,
-        'mutation' : swap_mutation,
-        'crossover' : order_crossover,
-        'parent_selection' : tournament(5, maximization=False),
-        'survivor_selection' : survivor_elitism(.02, maximization=False),
-        'fitness_function' : None,
-        'interactive_plot' : create_interactive_plot('Evolving...', 'Iteration', 'Quality', (0, 2000), (-2, 20000)),
+        'generate_individual' : ea.gen_individual_rep1(),
+        'mapping' : ea.mapping(),
+        'mutation' : vo.mutation_rep1(),
+        'crossover' : vo.crossover_rep1(),
+        'gen_desc' : ea.gen_desc(),
+        'parent_selection' : ea.tournament_selection(5, maximization=False),
+        'survivor_selection' : ea.elitism(),
+        'fitness_function' : ea.function_fitness(),
     }
-    config['fitness_function'] = function_fitness(config)
 
 
     random.seed(config['seed'])
-    bests = sea(config)
+    bests = tfl.evo(config)
     #print(bests)
     

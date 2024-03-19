@@ -2,6 +2,8 @@ import gymnasium as gym
 import random
 from maps_to_evaluate import *
 import temp
+import numpy as np
+#import evo_algorithm as ea
 
 RENDER_MODE = 'human'
 env = gym.make('FrozenLake-v1', desc=map_4_by_4, is_slippery=False, render_mode=RENDER_MODE)
@@ -15,8 +17,6 @@ ind = {
     'genotype': [],
     'fitness': 0
 }
-
-
 
 def single_run(ind):
 
@@ -56,4 +56,25 @@ def single_run(ind):
 
     return ind
 
-single_run(ind)
+
+def evo(config):
+
+    #genotype
+    population = [config['generate_individual']() for _ in range(config['population_size'])]
+
+    top_fitness = []
+    avg_fitness = []
+    
+
+    for i in range(config['generations']):
+
+        #convert genotype and eval
+        population = [config['fitness_function'](ind) for ind in population]
+
+        top_fitness.append(sorted(population, key=lambda d: d['fitness']))
+        avg_fitness.append(np.mean([ind['fitness'] for ind in population]))
+        #plot fitness
+        population = [config['gen_desc'](config, population) for _ in range(config['population_size'])]
+
+    return top_fitness, avg_fitness
+
