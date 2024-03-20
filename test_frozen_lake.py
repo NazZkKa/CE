@@ -12,7 +12,7 @@ if RENDER_MODE is not None:
     env.render()
 
 #To load temp.py
-
+#modelo de um indíviduo
 ind = {
     'genotype': [],
     'fitness': 0
