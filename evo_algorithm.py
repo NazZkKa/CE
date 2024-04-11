@@ -26,33 +26,31 @@ def gen_individual_rep1():
 
 
 def tournament_selection(population, tournament_size):
-    pop_size = population.size()
+    candidates = []
+    pop_size = len(population)
     candidates_idex = [random.randint(0, pop_size - 1) for i in range(tournament_size)]
-    candidates = population[candidates_idex]
+    for i in candidates_idex:
+        candidates.append(population[i])
+
     winner = sorted(candidates, key=lambda d: d["fitness"])[0]
     return winner
 
 
 def function_fitness(run):
-
     fitness = -8
-
     repeated = {i: run["route"].count(i) for i in run["route"]}
-
     if run["n_steps"] >= 8:
-        for i in range(run["n_steps"] - 8):
-            fitness += 0.5
+        fitness += (run["n_steps"]-8)*0.5
+        fitness += 8
     else:
-        for j in range(run["n_steps"]):
-            fitness += 1
-
+        fitness += run["n_steps"]
     for i in repeated:
         if repeated[i] > 1:
             fitness -= 1 * (repeated[i] - 1)
-
     if run["reward"] == 1:
         fitness += 100 / (run["n_steps"] - 8)
-
+    
+    print(fitness)
     return fitness
 
 
@@ -64,38 +62,20 @@ def elitism(population, options):
 
 
 def gen_desc(population, options):
-
     son = {
         "genotype": [],
         "fitness": 0,
         "run": {"n_steps": 0, "reward": 0, "route": []},
     }
-    
-    one_point = 0
-    
-    if options["crossover"] == "one_point":
-        one_point = 1
-        
-        
-
     ind1 = options["parent_selection"](population, 5)
     ind2 = options["parent_selection"](population, 3)
 
-    cross = 0
-
+    son["genotype"][:]=ind1["genotype"]
     prob = random.random()
-
     if prob < options["prob_crossover"]:
-        if one_point == 1:
-            son = vo.one_point(ind1, ind2)
-        cross = 1
-
+        options["crossover"](ind1,ind2,son["genotype"])
     prob2 = random.random()
-
     if prob2 < options["prob_mutation"]:
-        if cross == 0:
-            son = options["mutation"](ind1)
-        else:
-            son = options["mutation"](son)
+        options["mutation"](son)
 
     return son
