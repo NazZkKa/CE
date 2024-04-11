@@ -1,13 +1,16 @@
-import evo_algorithm as ea
-import variation_operators as vo
+import sys
 import random
+import evo_algorithm as ea
 import test_frozen_lake as tfl
 from maps_to_evaluate import *
-import sys
+from variation_operators import one_point
+from evo_algorithm import *
+
+
 
 
 if __name__ == '__main__':
-    # Dictonary with Configurations for the Simple Evolutionary Algorithm 
+    # Dictonary with Configurations for the Simple Evolutionary Algorithm 🥰
     config = {
         'population_size' : 10,
         'generations' : 25,
@@ -17,13 +20,11 @@ if __name__ == '__main__':
         'prob_mutation' : 0.05,
         'elite_size' : 0.1,
         'seed' : int(sys.argv[1]),
-        'generate_individual' : ea.gen_individual_rep1(),
-        'mapping' : ea.mapping(),
-        'mutation' : vo.mutation_rep1(),
-        'crossover' : vo.crossover_rep1(),
-        'gen_desc' : ea.gen_desc(),
-        'parent_selection' : ea.tournament_selection(),
-        'fitness_function' : ea.function_fitness(),
+        'generate_individual' : gen_individual_rep1,
+        'mutation' : "mutation_rep1",
+        'crossover' : one_point,
+        'parent_selection' : tournament_selection,
+        'fitness_function' : function_fitness,
     }
 
 
