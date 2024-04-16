@@ -24,15 +24,14 @@ def gen_individual_rep1():
 
     return ind
 
-
+#FIXED
 def tournament_selection(population, tournament_size):
     candidates = []
     pop_size = len(population)
     candidates_idex = [random.randint(0, pop_size - 1) for i in range(tournament_size)]
     for i in candidates_idex:
         candidates.append(population[i])
-
-    winner = sorted(candidates, key=lambda d: d["fitness"])[0]
+    winner = sorted(candidates, key=lambda d: d["fitness"], reverse=True)[0]
     return winner
 
 
@@ -49,8 +48,6 @@ def function_fitness(run):
             fitness -= 1 * (repeated[i] - 1)
     if run["reward"] == 1:
         fitness += 100 / (run["n_steps"] - 8)
-    
-    print(fitness)
     return fitness
 
 
@@ -67,7 +64,7 @@ def gen_desc(population, options):
         "fitness": 0,
         "run": {"n_steps": 0, "reward": 0, "route": []},
     }
-    ind1 = options["parent_selection"](population, 5)
+    ind1 = options["parent_selection"](population, 3)
     ind2 = options["parent_selection"](population, 3)
 
     son["genotype"][:]=ind1["genotype"]

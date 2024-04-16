@@ -12,8 +12,8 @@ from evo_algorithm import *
 if __name__ == '__main__':
     # Dictonary with Configurations for the Simple Evolutionary Algorithm 🥰
     config = {
-        'population_size' : 30,
-        'generations' : 3,
+        'population_size' : 10,
+        'generations' : 10,
         'genotype_size' : REP_1_SIZE_4_by_4,
         'max_steps' : REP_1_SIZE_4_by_4/2,
         'prob_crossover' : 0.9,
@@ -26,5 +26,5 @@ if __name__ == '__main__':
         'parent_selection' : tournament_selection,
         'fitness_function' : function_fitness,
     }
-    bests = tfl.evo(config)
+    top_fitness, avg_fitness = tfl.evo(config)
     
