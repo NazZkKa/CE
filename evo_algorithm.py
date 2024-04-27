@@ -29,7 +29,6 @@ def gen_individual_rep1(len_map):
 
     return ind
 
-#FIXED
 def tournament_selection(population, tournament_size):
     candidates = []
     pop_size = len(population)
@@ -41,18 +40,16 @@ def tournament_selection(population, tournament_size):
 
 
 def function_fitness(run, len_map):
-    cair_lago = 1
-    repetidos = 1.5
+    cair_lago = 1.5
+    repetidos = 2
     steps_pre_optimo = 1
-    steps_pos_optimo = 0.5
+    steps_pos_optimo = 1
+    proximidade = 3
 
     optimal_steps = int(math.sqrt(len_map)) * 2
 
     fitness = 0
     repeated = {i: run["route"].count(i) for i in run["route"]}
-
-    print(len(run["route"]))
-    print(run["reward"])
 
     if run["n_steps"] >= optimal_steps:
         fitness += (run["n_steps"]-optimal_steps)* steps_pos_optimo
@@ -69,9 +66,15 @@ def function_fitness(run, len_map):
     else:
         fitness -= cair_lago * (100-len(run["route"]))
     
-    print(fitness)
+    fitness +=proximidade * manhattan_distance(run["route"][run["n_steps"]],len_map)
 
     return fitness
+
+def manhattan_distance(end_pos, len_map):
+    lines = int(math.sqrt(len_map))
+    x_axys = end_pos % lines
+    y_axys = end_pos // lines
+    return x_axys + y_axys
 
 
 def elitism(population, options):
