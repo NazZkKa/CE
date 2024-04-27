@@ -3,21 +3,21 @@ import gymnasium as gym
 from maps_to_evaluate import *
 from evo_algorithm import *
 
-RENDER_MODE = None
+RENDER_MODE = "human"
+
+MAP = map_8_by_8
 
 
-def running_in_the_90s(ind, gen):
-    if gen > 48:
-        env = gym.make(
-        "FrozenLake-v1", desc=map_4_by_4, is_slippery=False, render_mode="human"
-        )
-    else:
-        env = gym.make(
-            "FrozenLake-v1", desc=map_4_by_4, is_slippery=False, render_mode=RENDER_MODE
-        )
-    pos, information = env.reset(seed=42)
+def running_in_the_90s(ind, gen):    
+    env = gym.make(
+        "FrozenLake-v1", desc=MAP, is_slippery=False, render_mode=RENDER_MODE
+    )
+    env.metadata['render_fps'] = 120
+    pos, information = env.reset()
     run = ind["run"]
-        
+
+    run["route"].append(pos)
+    
     for step in range(MAX_ITERATIONS_4_by_4):
         obs, reward, terminated, truncated, info = env.step(ind["genotype"][pos])
         if RENDER_MODE != None:
@@ -29,29 +29,28 @@ def running_in_the_90s(ind, gen):
         if RENDER_MODE is not None:
             env.render()
         if terminated:
-            run["reward"] = 1
             break
 
+    run["reward"] = reward
     return ind
 
 
 def evo(config):
     # genotype
     population = [
-        config["generate_individual"]() for _ in range(config["population_size"])
+        config["generate_individual"](config["genotype_size"]) for _ in range(config["population_size"])
     ]
 
     top_fitness = []
     avg_fitness = []
 
     for i in range(config["generations"]):
-
+        print("genaration:", i)
         for ind in population:
             ind = running_in_the_90s(ind,i)
-            ind["fitness"] = config['fitness_function'](ind["run"])
+            ind["fitness"] = config['fitness_function'](ind["run"],config["genotype_size"])
         
         top_performer = sorted(population, key=lambda d: d["fitness"], reverse=True)[0]
-        print(top_performer["fitness"])
         top_fitness.append(top_performer["fitness"])
         #avg_fitness.append(np.mean([ind["fitness"] for ind in population]))
 
