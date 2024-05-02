@@ -12,10 +12,9 @@ from evo_algorithm import *
 if __name__ == '__main__':
     # Dictonary with Configurations for the Simple Evolutionary Algorithm 🥰
     config = {
-        'population_size' : 30,
-        'generations' : 30,
-        'genotype_size' : REP_1_SIZE_8_by_8,
-        'max_steps' : REP_1_SIZE_8_by_8/2,
+        'population_size' : 100,
+        'generations' : 100,
+        'genotype_size' : REP_1_SIZE_12_by_12,
         'prob_crossover' : 0.9,
         'prob_mutation' : 0.2,
         'elite_size' : 0.1,

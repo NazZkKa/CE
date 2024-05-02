@@ -3,10 +3,10 @@ import gymnasium as gym
 from maps_to_evaluate import *
 from evo_algorithm import *
 
-RENDER_MODE = "human"
+RENDER_MODE = None
 
-MAP = map_8_by_8
-
+MAP = map_12_by_12
+ITERATIONS = MAX_ITERATIONS_12_by_12//2
 
 def running_in_the_90s(ind, gen):    
     env = gym.make(
@@ -17,14 +17,23 @@ def running_in_the_90s(ind, gen):
     run = ind["run"]
 
     run["route"].append(pos)
+    visitados = {}
     
-    for step in range(MAX_ITERATIONS_4_by_4):
+    visitados[pos]=True
+
+    for step in range(ITERATIONS):
         obs, reward, terminated, truncated, info = env.step(ind["genotype"][pos])
         if RENDER_MODE != None:
             env.render()
+        
+        if obs in visitados:
+            break
+        else:
+            run["n_steps"] += 1
+            run["route"].append(obs)
+            visitados[obs]=True
+
         pos = obs
-        run["n_steps"] += 1
-        run["route"].append(obs)
 
         if RENDER_MODE is not None:
             env.render()

@@ -41,9 +41,10 @@ def tournament_selection(population, tournament_size):
 
 def function_fitness(run, len_map):
     cair_lago = 1.5
+    n_steps = 2
     repetidos = 2
     steps_pre_optimo = 1
-    steps_pos_optimo = 1
+    steps_pos_optimo = 0
     proximidade = 3
 
     optimal_steps = int(math.sqrt(len_map)) * 2
@@ -62,9 +63,9 @@ def function_fitness(run, len_map):
             fitness -= repetidos * (repeated[i] - 1)
 
     if run["reward"] == 1:
-        fitness += 100 / (run["n_steps"] - optimal_steps)
-    else:
-        fitness -= cair_lago * (100-len(run["route"]))
+        print("fiz em:", run["n_steps"])
+        fitness += 50 - (run["n_steps"]*n_steps)
+    
     
     fitness +=proximidade * manhattan_distance(run["route"][run["n_steps"]],len_map)
 
