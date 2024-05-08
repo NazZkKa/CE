@@ -5,8 +5,8 @@ from evo_algorithm import *
 
 RENDER_MODE = None
 
-MAP = map_12_by_12
-ITERATIONS = MAX_ITERATIONS_12_by_12//2
+MAP = map_8_by_8
+ITERATIONS = MAX_ITERATIONS_8_by_8//2
 
 def running_in_the_90s(ind, gen):    
     env = gym.make(
@@ -62,8 +62,12 @@ def evo(config):
         top_performer = sorted(population, key=lambda d: d["fitness"], reverse=True)[0]
         top_fitness.append(top_performer["fitness"])
         #avg_fitness.append(np.mean([ind["fitness"] for ind in population]))
-
+        population = sorted(population, key=lambda d: d["fitness"], reverse=True)
+        elite = elitism(population, config)
+        print(elite)
         population = [
-            config["genarate_son"](population, config) for _ in range(config["population_size"])
+            config["genarate_son"](population, config) for _ in range(config["population_size"]-int((config["population_size"]*config["elite_size"])))
         ]
+        population.extend(elite)
+        print(elite)
     return top_fitness, avg_fitness
