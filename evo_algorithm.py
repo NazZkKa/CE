@@ -1,6 +1,7 @@
 import random
 import variation_operators as vo
 import math
+import copy
 
 actions = {
     "esquerda": 0,
@@ -40,11 +41,10 @@ def tournament_selection(population, tournament_size):
 
 
 def function_fitness(run, len_map):
-    cair_lago = 1.5
     n_steps = 2
     repetidos = 2
-    steps_pre_optimo = 1
-    steps_pos_optimo = 0
+    steps_pre_optimo = 2
+    steps_pos_optimo = 2
     proximidade = 3
 
     optimal_steps = int(math.sqrt(len_map)) * 2
@@ -79,9 +79,12 @@ def manhattan_distance(end_pos, len_map):
 
 
 def elitism(population, options):
-    elite = sorted(population, key=lambda d: d["fitness"])[
+    """ elite = sorted(population, key=lambda d: d["fitness"], reverse=True)[
         0 : int(options["elite_size"] * options["population_size"])
-    ]
+    ] """
+    
+    elite = population[0:int(options["elite_size"] * options["population_size"])]
+    elite = copy.deepcopy(elite)
     return elite
 
 
