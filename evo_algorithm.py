@@ -44,7 +44,7 @@ def function_fitness(run, len_map):
     n_steps = 3
     repetidos = 2
     steps_pre_optimo = 2
-    steps_pos_optimo = 1
+    steps_pos_optimo = 0
     proximidade = 3
 
     optimal_steps = int(math.sqrt(len_map)) * 2
@@ -64,7 +64,7 @@ def function_fitness(run, len_map):
 
     if run["reward"] == 1:
         print("fiz em:", run["n_steps"])
-        fitness += 50 - (run["n_steps"]*n_steps)
+        fitness += 200 - (run["n_steps"]*n_steps)
     
     
     fitness +=proximidade * manhattan_distance(run["route"][run["n_steps"]],len_map)
