@@ -21,7 +21,7 @@ if __name__ == '__main__':
         'generate_individual' : gen_individual_rep1,
         'genarate_son': gen_desc,
         'mutation' : square_flip,
-        'crossover' : one_point,
+        'crossover' : uniform_crossover,
         'parent_selection' : tournament_selection,
         'fitness_function' : function_fitness,
     }

@@ -80,3 +80,12 @@ def one_point(ind1, ind2, genotype,len_map):
     parte1=ind1["genotype"][:crossing_point]
     parte2=ind2["genotype"][crossing_point:]
     genotype[:] = parte1 + parte2
+
+
+def uniform_crossover(ind1, ind2, genotype,len_map):
+    for i in range(len_map):
+        prob_swap = random.random()
+        if prob_swap < 0.5:
+            genotype[i]=ind1["genotype"][i]
+        else:
+            genotype[i]=ind2["genotype"][i]
