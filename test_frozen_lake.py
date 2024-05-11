@@ -5,8 +5,8 @@ from evo_algorithm import *
 
 RENDER_MODE = None
 
-MAP = map_12_by_12
-ITERATIONS = MAX_ITERATIONS_12_by_12//2
+MAP = map_8_by_8
+ITERATIONS = MAX_ITERATIONS_8_by_8//2
 
 def running_in_the_90s(ind, gen):    
     env = gym.make(

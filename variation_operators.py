@@ -24,6 +24,7 @@ def line_flip(ind, len_map):
             ind["genotype"][i + line_to_mutate*lines]=new_action%4
 
 
+
 def one_point(ind1, ind2, genotype,len_map):
     crossing_point = random.randint(0,len_map-1)
     parte1=ind1["genotype"][:crossing_point]
