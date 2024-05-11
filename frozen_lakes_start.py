@@ -17,11 +17,11 @@ if __name__ == '__main__':
         'genotype_size' : REP_1_SIZE_8_by_8,
         'prob_crossover' : 0.9,
         'prob_mutation' : 1,
-        'elite_size' : 0.01,
+        'elite_size' : 2,
         'generate_individual' : gen_individual_rep1,
         'genarate_son': gen_desc,
         'mutation' : square_flip,
-        'crossover' : uniform_crossover,
+        'crossover' : one_point,
         'parent_selection' : tournament_selection,
         'fitness_function' : function_fitness,
     }
