@@ -64,10 +64,8 @@ def evo(config):
         #avg_fitness.append(np.mean([ind["fitness"] for ind in population]))
         population = sorted(population, key=lambda d: d["fitness"], reverse=True)
         elite = elitism(population, config)
-        print(elite)
         population = [
             config["genarate_son"](population, config) for _ in range(config["population_size"]-int((config["population_size"]*config["elite_size"])))
         ]
         population.extend(elite)
-        print(elite)
     return top_fitness, avg_fitness
