@@ -12,6 +12,23 @@ actions = {
 
 run = {"n_steps": 0, "reward": 0, "route": []}
 
+def gen_individual_rep_string(len_map):
+    ind = {
+        "genotype": [],
+        "fitness": 0,
+        "run": {"n_steps": 0, "reward": 0, "route": []},
+    }
+    
+    optimum = int(math.sqrt(len_map))
+    worst =  len_map
+
+    len_genotype = random.randint(optimum,worst)
+
+    for i in range (len_genotype):
+        ind["genotype"].append(random.randint(0,3))
+
+    return ind
+
 
 def gen_individual_rep1(len_map):
 

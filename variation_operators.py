@@ -89,3 +89,36 @@ def uniform_crossover(ind1, ind2, genotype,len_map):
             genotype[i]=ind1["genotype"][i]
         else:
             genotype[i]=ind2["genotype"][i]
+
+############### STRING #####################
+
+def mutations_string(ind):
+    prob_type_of_mut = random.random()
+    if prob_type_of_mut < 0.5:#delete
+        local_delete = random.randint(0, len(ind["genotype"]-1))
+        ind["genotype"].pop(local_delete)
+    else:#flip
+        local_flip = random.randint(0, len(ind["genotype"]-1))
+        action_extra = random.randint(1,3)
+        new_action = ind["genotype"][local_flip]+action_extra
+        ind["genotype"][local_flip]=new_action%4
+
+def one_point_string(ind1, ind2, genotype, len_map):
+    if len(ind1['genotype']) > 1:
+        cut_point1 = random.randint(0, len(ind1["genotype"]-1))
+        if cut_point1 > len_map/2:
+            cut_point1 = random.randint(0, len_map)
+        part1 = ind1["genotype"][0:cut_point1]
+    else:
+        part1 = [ind1["genotype"][0]]
+    
+    if len(ind2['genotype']) > 1:
+        cut_point2 = random.randint(0, len(ind2["genotype"]-1))
+        if cut_point2 > len_map/2:
+            cut_point2 = random.randint(0, len_map)
+        part2 = ind2["genotype"][len(ind2['genotype'])-cut_point2:len(ind2['genotype'])]
+    else:
+        part2 = [ind2["genotype"][0]]
+
+    genotype[:]= part1 + part2
+        
