@@ -16,9 +16,9 @@ if __name__ == '__main__':
         'population_size' : 100,
         'generations' : 100,
         'genotype_size' : MAX_ITERATIONS_8_by_8,
-        'prob_crossover' : 0.9,
-        'prob_mutation' : 0.2,
-        'elite_size' : 2,
+        'prob_crossover' : 0.8,
+        'prob_mutation' : 0.1,
+        'elite_size' : 0,
         'generate_individual' : gen_individual_rep_string,
         'genarate_son': gen_desc_string,
         'mutation' : mutations_string,
@@ -36,11 +36,12 @@ if __name__ == '__main__':
     for i in range(30):
         print('Run: ', i+1)
         top_fitness, avg_fitness = tfl.evo(config)
+        gen_melhor = top_fitness.index(max(top_fitness))
         best_top_fitness = sorted(top_fitness, reverse=True)
         best_avg_fitness = sorted(avg_fitness, reverse=True)
         best_best_top_fitness = best_top_fitness[0]
         best_best_avg_fitness = best_avg_fitness[0]
-        file.write(str(i+1) + ',' + str(best_best_top_fitness) + ',' + str(best_best_avg_fitness) + '\n')
+        file.write(str(i+1) + ',' + str(best_best_top_fitness) + ',' + str(best_best_avg_fitness) + ',' + str(gen_melhor)  + '\n')
         
 
 
