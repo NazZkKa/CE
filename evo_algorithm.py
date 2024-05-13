@@ -18,7 +18,7 @@ def gen_individual_rep_string(len_map):
         "fitness": 0,
         "run": {"n_steps": 0, "reward": 0, "route": []},
     }
-    
+
     optimum = int(math.sqrt(len_map))
     worst =  len_map
 
@@ -122,5 +122,25 @@ def gen_desc(population, options):
     prob2 = random.random()
     if prob2 < options["prob_mutation"]:
         options["mutation"](son,options["genotype_size"])
+
+    return son
+
+
+def gen_desc_string(population, options):
+    son = {
+        "genotype": [],
+        "fitness": 0,
+        "run": {"n_steps": 0, "reward": 0, "route": []},
+    }
+    ind1 = options["parent_selection"](population, 3)
+    ind2 = options["parent_selection"](population, 3)
+
+    son["genotype"][:]=ind1["genotype"]
+    prob = random.random()
+    if prob < options["prob_crossover"]:
+        options["crossover"](ind1,ind2,son["genotype"],options["genotype_size"])
+    prob2 = random.random()
+    if prob2 < options["prob_mutation"]:
+        options["mutation"](son)
 
     return son
